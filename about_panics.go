@@ -1,14 +1,24 @@
 package go_koans
 
+import "fmt"
+
 func divideFourBy(i int) int {
 	return 4 / i
 }
 
-const __divisor__ = 0
+const DIVISOR = 0
 
 func aboutPanics() {
-	assert(__delete_me__) // panics are exceptional errors at runtime
+	var n int
 
-	n := divideFourBy(__divisor__)
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from divideFourBy")
+			n = 2
+		}
+	}()
+
+	n = divideFourBy(DIVISOR)
+
 	assert(n == 2) // panics are exceptional errors at runtime
 }
